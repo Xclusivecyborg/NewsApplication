@@ -31,12 +31,25 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Icon(
+          Icons.menu,
+          color: Colors.black87,
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Icon(
+              Icons.person,
+              color: Colors.black87,
+            ),
+          )
+        ],
         centerTitle: true,
         title: Text(
           "Latest News",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.black87),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blueGrey,
       ),
       body: NewsBody(),
     );

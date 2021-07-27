@@ -22,7 +22,7 @@ class ApiCallClass {
     } on SocketException {
       throw "You are not connected to the internet";
     } catch (e) {
-      throw "An unexpected error occured";
+      throw "An unexpected error occurred !";
     }
   }
 }

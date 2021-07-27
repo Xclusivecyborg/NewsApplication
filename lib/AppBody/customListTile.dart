@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:thenews/AppBody/newspage.dart';
 import 'package:thenews/models/models.dart';
 // import 'package:thenews/ApiClass/apicall.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
-Widget customListTile(Article article) {
+Widget customListTile(Article article, context) {
   return Container(
-    padding: EdgeInsets.all(12),
-    margin: EdgeInsets.all(5),
+    padding: EdgeInsets.all(15),
+    margin: EdgeInsets.all(10),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(8),
       boxShadow: [
         BoxShadow(
-          color: Colors.black12,
-        )
+          color: Colors.blueGrey[200],
+          blurRadius: 7,
+          spreadRadius: 1,
+        ),
       ],
     ),
     child: Column(
@@ -23,6 +26,16 @@ Widget customListTile(Article article) {
           height: 200,
           width: double.infinity,
           decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+              20,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.blueGrey[600],
+                blurRadius: 7,
+                spreadRadius: 5,
+              ),
+            ],
             image: DecorationImage(
               fit: BoxFit.cover,
               image: NetworkImage(
@@ -31,43 +44,73 @@ Widget customListTile(Article article) {
           ),
         ),
         SizedBox(
-          height: 8.0,
+          height: 15.0,
         ),
         Container(
+          width: double.infinity,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              30,
-            ),
-          ),
-          child: Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(3),
+              color: Colors.blueGrey[600],
+              borderRadius: BorderRadius.circular(
+                30,
               ),
-              Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 7,
+                  spreadRadius: 1,
                 ),
-                child: Text(
-                  article.source.name,
-                  style: TextStyle(
-                    color: Colors.white,
+              ]),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      color: Colors.yellow[600],
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black45,
+                          blurRadius: 7,
+                          spreadRadius: 3,
+                        ),
+                      ]),
+                  child: Text(
+                    article.source.name,
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
                   ),
                 ),
-              ),
-              IconButton(
+                TextButton.icon(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.black26,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NewsPage(
+                          article: article,
+                        ),
+                      ),
+                    );
+                  },
                   icon: Icon(
-                    Icons.launch,
-                    size: 30,
+                    Icons.arrow_forward_ios,
+                    color: Colors.amber,
                   ),
-                  onPressed: () async {
-                    await canLaunch(article.url)
-                        ? launch(article.url)
-                        : throw "can't launch ${article.url}";
-                  }),
-            ],
+                  label: Text(
+                    "Read News",
+                    style: TextStyle(color: Colors.amber),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         SizedBox(

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:thenews/ApiClass/apicall.dart';
 import 'package:thenews/AppBody/customListTile.dart';
+import 'package:thenews/AppBody/loading.dart';
 import 'package:thenews/models/models.dart';
-// import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 
 class NewsBody extends StatefulWidget {
   @override
@@ -11,10 +12,15 @@ class NewsBody extends StatefulWidget {
 
 class _NewsBodyState extends State<NewsBody> {
   final mynews = ApiCallClass();
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
+      backgroundColor: Colors.black12,
       body: FutureBuilder(
         future: mynews.getNews(),
         builder: (context, AsyncSnapshot<List<Article>> snapshot) {
@@ -22,14 +28,16 @@ class _NewsBodyState extends State<NewsBody> {
             final snap = snapshot.data;
             return ListView.builder(
               itemCount: snap.length,
-              itemBuilder: (context, index) => customListTile(
-                snapshot.data[index],
-              ),
+              itemBuilder: (context, index) =>
+                  customListTile(snapshot.data[index], context),
             );
           } else if (snapshot.hasError) {
-            return Text("Can't Fetch News !");
+            return Center(
+                child: Text(
+              snapshot.error,
+            ));
           }
-          return Center(child: CircularProgressIndicator());
+          return Loading();
         },
       ),
     );
